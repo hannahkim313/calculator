@@ -1,0 +1,179 @@
+* {
+    margin: 0;
+    padding: 0;
+    color: #7f6762;
+    font-family: "Inter", "Roboto", sans-serif, Arial, Helvetica;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background-color: #fff4e6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+p {
+    font-size: 15px;
+}
+
+button {
+    border: none;
+    box-shadow: 2px 4px 5px #c6b8a7, -2px 4px 5px #c6b8a7;
+    cursor: pointer;
+}
+
+/*
+*
+* Selectors for the calculator bodies start here.
+*
+*/
+
+.outer-body {
+    width: 350px;
+    height: 500px;
+    margin-bottom: 25px;
+    background-color: #e0d1bf;
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+    border-bottom-left-radius: 12%;
+    border-bottom-right-radius: 12%;
+    box-shadow: 5px 10px 10px #c6b8a7, -5px 10px 10px #c6b8a7;
+    position: relative;
+}
+
+.inner-body {
+    width: 330px;
+    height: 480px;
+    background-color: #faebd7;
+    border: 2px solid #c6b8a7;
+    border-top-left-radius: 4%;
+    border-top-right-radius: 4%;
+    border-bottom-left-radius: 11%;
+    border-bottom-right-radius: 11%;
+    box-shadow: -2px 2px 5px #c6b8a7, 2px 2px 5px #c6b8a7;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 30px;
+}
+
+/*
+*
+* Selectors for the display screen start here.
+*
+*/
+
+.display {
+    width: 275px;
+    height: 100px;
+    margin-top: 25px;
+    background-color: #fff4e6;
+    border-radius: 10px;
+    box-shadow: inset -5px 5px 10px #c6b8a7, inset 5px 5px 10px #c6b8a7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 5px;
+}
+
+.content {
+    margin-right: 20px;
+}
+
+.result {
+    font-size: 35px;
+}
+
+/*
+*
+* Selectors for the buttons start here.
+*
+*/
+
+.btns {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Selectors for the large buttons. */
+
+.large-btns {
+    display: flex;
+    justify-content: space-between;
+}
+
+.large {
+    width: 90px;
+    height: 40px;
+    background-color: #977b75;
+    border-radius: 30px;
+    outline: 1px solid #c9c0b4;
+    outline-offset: -5px;
+}
+
+.large:hover {
+    background-color: #856a65;
+}
+
+.large:active {
+    transform: translateY(2px);
+}
+
+.text {
+    color: #fff4e6;
+}
+
+/* Selectors for the small buttons. */
+
+.small-btns {
+    display: flex;
+    gap: 15px;
+}
+
+.small {
+    width: 50px;
+    height: 50px;
+    background-color: #fff4e6;
+    border-radius: 50%;
+}
+
+.small:hover {
+    background-color: #f1e7da;
+}
+
+.small:active {
+    transform: translateY(2px);
+}
+
+.divide,
+.multiply,
+.subtract,
+.plus,
+.equals,
+.decimal {
+    outline: 1px solid #c9c0b4;
+    outline-offset: -5px;
+}
+
+/*
+*
+* Selectors for the footer start here.
+*
+*/
+
+.footer {
+    margin-top: 25px;
+}
