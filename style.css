@@ -85,7 +85,6 @@ button {
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
-    gap: 5px;
 }
 
 .content {
@@ -94,6 +93,7 @@ button {
 
 .result {
     font-size: 35px;
+    margin-top: 20px;
 }
 
 /*
@@ -161,7 +161,7 @@ button {
 .divide,
 .multiply,
 .subtract,
-.plus,
+.add,
 .equals,
 .decimal {
     outline: 1px solid #c9c0b4;

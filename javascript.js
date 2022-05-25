@@ -1,4 +1,13 @@
 /**
+ * 
+ * Element object declarations start here.
+ * 
+ */
+
+ const numBtnsList = document.querySelectorAll(".num");
+ const result = document.querySelector(".result");
+
+/**
  * Adds two numbers and returns the sum.
  * @param {number} a 
  * @param {number} b 
@@ -51,3 +60,42 @@ function operate(op, a, b) {
         : op === "multiply" ? multiply(a, b)
         : divide(a, b);
 }
+
+/**
+ * Displays the result as each number button is clicked and saves the result
+ * into resultValue.
+ */
+ function displayResult() {
+     let resultText = result.textContent;
+     let resultLength = result.textContent.length;
+
+    for (const button of numBtnsList) {
+        button.addEventListener("click", e => {
+            if (resultText === "0") result.removeChild(result.firstChild);
+            if (resultLength === 10) button.removeEventListener("click", e);
+            else {
+                resultText = resultText ? resultText += button.textContent
+                    : button.textContent;
+                resultValue = resultText;
+            }
+        });
+    }
+}
+
+/**
+ * 
+ * Variable declarations start here.
+ * 
+ */
+
+let resultValue = 0;
+
+/**
+ * 
+ * Event listeners start here.
+ * 
+ */
+
+window.addEventListener("pageshow", e => {
+    displayResult();
+});
