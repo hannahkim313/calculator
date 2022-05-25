@@ -37,3 +37,17 @@ function multiply(a, b) {
 function divide(a, b) {
     return roundToFive(a / b);
 }
+
+/**
+ * Calls the corresponding operator function to perform calculation.
+ * @param {string} op - Operator type.
+ * @param {number} a 
+ * @param {number} b 
+ * @returns {number} answer of operator performed on numbers.
+ */
+function operate(op, a, b) {
+    return op === "add" ? add(a, b)
+        : op === "subtract" ? subtract(a, b)
+        : op === "multiply" ? multiply(a, b)
+        : divide(a, b);
+}
