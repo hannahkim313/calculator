@@ -65,18 +65,15 @@ function operate(op, a, b) {
  * Displays the result as each number button is clicked and saves the result
  * into resultValue.
  */
- function displayResult() {
-     let resultText = result.textContent;
-     let resultLength = result.textContent.length;
-
+function displayResult() {
     for (const button of numBtnsList) {
         button.addEventListener("click", e => {
-            if (resultText === "0") result.removeChild(result.firstChild);
-            if (resultLength === 10) button.removeEventListener("click", e);
+            if (result.textContent === "0") result.removeChild(result.firstChild);
+            if (result.textContent.length === 10) button.removeEventListener("click", e);
             else {
-                resultText = resultText ? resultText += button.textContent
+                result.textContent = result.textContent ? result.textContent += button.textContent
                     : button.textContent;
-                resultValue = resultText;
+                resultValue = result.textContent;
             }
         });
     }
