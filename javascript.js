@@ -97,11 +97,11 @@ function displayResult() {
                 result.textContent = button.textContent;
                 digits++;
             } else {
-                if (result.textContent && !data["op"]) {
+                if (result.textContent && !data["sign"]) {
                     if (digits === 10) button.disabled = true;
                     result.textContent += button.textContent;
                     digits++;
-                } else if (result.textContent && data["op"]) {
+                } else if (result.textContent && data["sign"]) {
                     if (digits === 1) result.removeChild(result.firstChild);
                     if (digits === 10) button.disabled = true;
                     result.textContent += button.textContent;
@@ -123,13 +123,17 @@ window.addEventListener("pageshow", e => {
 });
 
 addBtn.addEventListener("click", e => {
-    data["a"] = parseInt(result.textContent);
-    data["op"] = "add";
+    if (data["sign"] === "add") {
+        data["a"] = operate("add", data["a"], parseInt(result.textContent));
+        result.textContent = data["a"];
+    } else data["a"] = parseInt(result.textContent);
+    data["sign"] = "add";
     digits = 1;
 });
 
 equalsBtn.addEventListener("click", e => {
     data["b"] = parseInt(result.textContent);
-    result.textContent = operate(data["op"], data["a"], data["b"]);
+    result.textContent = operate(data["sign"], data["a"], data["b"]);
     data["a"] = result.textContent;
+    data["sign"] = "equals";
 });
