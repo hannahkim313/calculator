@@ -6,7 +6,6 @@
 
  const numBtnsList = document.querySelectorAll(".num");
  const result = document.querySelector(".result");
- const opBtnsList = document.querySelectorAll(".op");
  const addBtn = document.querySelector(".add");
  const subtractBtn = document.querySelector(".subtract");
  const multiplyBtn = document.querySelector(".multiply");
@@ -132,7 +131,8 @@ addBtn.addEventListener("click", e => {
 });
 
 equalsBtn.addEventListener("click", e => {
-    if (data["sign"] === "equals") equalsBtn.removeEventListener("click", e);
+    if ("a" in data === false) equalsBtn.removeEventListener("click", e);
+    else if (data["sign"] === "equals") equalsBtn.removeEventListener("click", e);
     else {
         data["b"] = parseInt(result.textContent);
         result.textContent = operate(data["sign"], data["a"], data["b"]);
