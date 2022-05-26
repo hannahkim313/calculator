@@ -95,19 +95,12 @@ function displayResult() {
             if (result.textContent === "0") {
                 result.removeChild(result.firstChild);
                 result.textContent = button.textContent;
-                digits++;
             } else {
-                if (result.textContent && !data["sign"]) {
-                    if (digits === 10) button.disabled = true;
-                    result.textContent += button.textContent;
-                    digits++;
-                } else if (result.textContent && data["sign"]) {
-                    if (digits === 1) result.removeChild(result.firstChild);
-                    if (digits === 10) button.disabled = true;
-                    result.textContent += button.textContent;
-                    digits++;
-                } else result.textContent = button.textContent;
+                if (digits === 1) result.removeChild(result.firstChild);
+                if (digits === 10) button.disabled = true;
+                result.textContent += button.textContent;
             }
+            digits++;
         });
     }
 }
@@ -132,8 +125,11 @@ addBtn.addEventListener("click", e => {
 });
 
 equalsBtn.addEventListener("click", e => {
-    data["b"] = parseInt(result.textContent);
-    result.textContent = operate(data["sign"], data["a"], data["b"]);
-    data["a"] = result.textContent;
-    data["sign"] = "equals";
+    if (data["sign"] === "equals") equalsBtn.removeEventListener("click", e);
+    else {
+        data["b"] = parseInt(result.textContent);
+        result.textContent = operate(data["sign"], data["a"], data["b"]);
+        data["a"] = result.textContent;
+        data["sign"] = "equals";
+    }
 });
