@@ -21,6 +21,7 @@
 
 const data = {};
 let digits = 1;
+let count = 1;
 
 /**
  * Rounds a number to 5 decimal places.
@@ -101,6 +102,7 @@ function displayResult() {
                 result.textContent += button.textContent;
             }
             digits++;
+            count = 1;
         });
     }
 }
@@ -116,12 +118,17 @@ window.addEventListener("pageshow", e => {
 });
 
 addBtn.addEventListener("click", e => {
-    if (data["sign"] === "add") {
-        data["a"] = operate("add", data["a"], parseInt(result.textContent));
-        result.textContent = data["a"];
-    } else data["a"] = parseInt(result.textContent);
-    data["sign"] = "add";
-    digits = 1;
+    if (count === 2) {
+        addBtn.removeEventListener("click", e);
+    } else {
+        if (data["sign"] === "add") {
+            data["a"] = operate("add", data["a"], parseInt(result.textContent));
+            result.textContent = data["a"];
+        } else data["a"] = parseInt(result.textContent);
+        data["sign"] = "add";
+        digits = 1;
+        count++;
+    }
 });
 
 equalsBtn.addEventListener("click", e => {
