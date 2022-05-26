@@ -6,6 +6,30 @@
 
  const numBtnsList = document.querySelectorAll(".num");
  const result = document.querySelector(".result");
+ const opBtnsList = document.querySelectorAll(".op");
+ const addBtn = document.querySelector(".add");
+ const subtractBtn = document.querySelector(".subtract");
+ const multiplyBtn = document.querySelector(".multiply");
+ const divideBtn = document.querySelector(".divide");
+ const equalsBtn = document.querySelector(".equals");
+
+ /**
+ * 
+ * Variable declarations start here.
+ * 
+ */
+
+const data = {};
+let digits = 1;
+
+/**
+ * Rounds a number to 5 decimal places.
+ * @param {number} a 
+ * @returns {number} number rounded to 5 decimal places.
+ */
+ function roundToFive(a) {
+    return +(Math.round(a + "e+5")  + "e-5");
+}
 
 /**
  * Adds two numbers and returns the sum.
@@ -62,30 +86,30 @@ function operate(op, a, b) {
 }
 
 /**
- * Displays the result as each number button is clicked and saves the result
- * into resultValue.
+ * Displays each number on the screen as a number button is clicked
+ * (max is 10 digits).
  */
 function displayResult() {
     for (const button of numBtnsList) {
         button.addEventListener("click", e => {
-            if (result.textContent === "0") result.removeChild(result.firstChild);
-            if (result.textContent.length === 10) button.removeEventListener("click", e);
-            else {
-                result.textContent = result.textContent ? result.textContent += button.textContent
-                    : button.textContent;
-                resultValue = result.textContent;
+            if (result.textContent === "0") {
+                result.removeChild(result.firstChild);
+                result.textContent = button.textContent;
+                digits++;
             }
+            if (result.textContent && !data["op"]) {
+                if (digits === 10) button.disabled = true;
+                result.textContent += button.textContent;
+                digits++;
+            } else if (result.textContent && data["op"]) {
+                if (digits === 1) result.removeChild(result.firstChild);
+                if (digits === 10) button.disabled = true;
+                result.textContent += button.textContent;
+                digits++;
+            } else result.textContent = button.textContent;
         });
     }
 }
-
-/**
- * 
- * Variable declarations start here.
- * 
- */
-
-let resultValue = 0;
 
 /**
  * 
@@ -95,4 +119,25 @@ let resultValue = 0;
 
 window.addEventListener("pageshow", e => {
     displayResult();
+});
+
+addBtn.addEventListener("click", e => {
+    // If the next button clicked is equals
+    data["a"] = parseInt(result.textContent);
+    data["op"] = "add";
+    digits = 1;
+    
+    // If the next button clicked is a number
+    
+    // If the next button clicked in an operator
+
+    // If the next button clicked is ac
+
+    // If the next button clicked if del
+});
+
+equalsBtn.addEventListener("click", e => {
+    data["b"] = parseInt(result.textContent);
+    result.textContent = operate(data["op"], data["a"], data["b"]);
+    data["a"] = result.textContent;
 });
