@@ -96,17 +96,18 @@ function displayResult() {
                 result.removeChild(result.firstChild);
                 result.textContent = button.textContent;
                 digits++;
+            } else {
+                if (result.textContent && !data["op"]) {
+                    if (digits === 10) button.disabled = true;
+                    result.textContent += button.textContent;
+                    digits++;
+                } else if (result.textContent && data["op"]) {
+                    if (digits === 1) result.removeChild(result.firstChild);
+                    if (digits === 10) button.disabled = true;
+                    result.textContent += button.textContent;
+                    digits++;
+                } else result.textContent = button.textContent;
             }
-            if (result.textContent && !data["op"]) {
-                if (digits === 10) button.disabled = true;
-                result.textContent += button.textContent;
-                digits++;
-            } else if (result.textContent && data["op"]) {
-                if (digits === 1) result.removeChild(result.firstChild);
-                if (digits === 10) button.disabled = true;
-                result.textContent += button.textContent;
-                digits++;
-            } else result.textContent = button.textContent;
         });
     }
 }
@@ -122,18 +123,9 @@ window.addEventListener("pageshow", e => {
 });
 
 addBtn.addEventListener("click", e => {
-    // If the next button clicked is equals
     data["a"] = parseInt(result.textContent);
     data["op"] = "add";
     digits = 1;
-    
-    // If the next button clicked is a number
-    
-    // If the next button clicked in an operator
-
-    // If the next button clicked is ac
-
-    // If the next button clicked if del
 });
 
 equalsBtn.addEventListener("click", e => {
