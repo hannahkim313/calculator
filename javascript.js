@@ -26,6 +26,12 @@ let digits = 1;
 let count = 1;
 
 /**
+ * 
+ * Function declarations start here.
+ * 
+ */
+
+/**
  * Rounds a number to 5 decimal places.
  * @param {number} a 
  * @returns {number} number rounded to 5 decimal places.
@@ -89,6 +95,18 @@ function operate(op, a, b) {
 }
 
 /**
+ * Clears all data stored in the calculator.
+ */
+function clearData() {
+    for (key in data) {
+        delete data[key];
+    }
+    result.textContent = "0";
+    memory.textContent = "0";
+    memory.style.visibility = "hidden";
+}
+
+/**
  * Calculates and updates the values of both the equation and result based
  * on which operator is clicked.
  * @param {string} op - Name of operator.
@@ -109,6 +127,7 @@ function updateValues(op) {
 function displayResult() {
     for (const btn of numBtnsList) {
         btn.addEventListener("click", e => {
+            if (data["sign"] === "equals") clearData();
             if (result.textContent === "0") {
                 result.removeChild(result.firstChild);
                 result.textContent = btn.textContent;
@@ -116,8 +135,8 @@ function displayResult() {
                 if (digits === 1) result.removeChild(result.firstChild);
                 if (digits === 10) btn.disabled = true;
                 result.textContent += btn.textContent;
+                digits++;
             }
-            digits++;
             count = 1;
         });
     }
@@ -191,14 +210,4 @@ equalsBtn.addEventListener("click", e => {
     }
 });
 
-acBtn.addEventListener("click", e => {
-    for (key in data) {
-        delete data[key];
-    }
-    result.textContent = "0";
-    memory.textContent = "0";
-    memory.style.visibility = "hidden";
-});
-
-// BUG: AFTER DISPLAYING EQUATION AND RESULT, USER CAN APPEND NUMBERS ONTO THE RESULT
-// EX: 2 + 3 = 5 --> CLICKS 234 --> 5234
+acBtn.addEventListener("click", e => clearData());
