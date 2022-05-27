@@ -85,6 +85,7 @@ button {
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
+    gap: 5px;
 }
 
 .content {
@@ -93,7 +94,6 @@ button {
 
 .result {
     font-size: 35px;
-    margin-top: 20px;
 }
 
 /*

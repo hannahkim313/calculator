@@ -5,6 +5,7 @@
  */
 
  const numBtnsList = document.querySelectorAll(".num");
+ const memory = document.querySelector(".memory");
  const result = document.querySelector(".result");
  const opBtnsList = document.querySelectorAll(".op");
  const addBtn = document.querySelector(".add");
@@ -108,103 +109,66 @@ function displayResult() {
 }
 
 /**
+ * Displays the calculated equation above the result as each operator is clicked.
+ * @param {string} op - Name of operator.
+ */
+function displayEquation(op) {
+    if (data["sign"] === "add") {
+        data["a"] = operate("add", data["a"], parseInt(result.textContent));
+        result.textContent = data["a"];
+        memory.textContent = `${data["a"]} + `;
+    } else if (data["sign"] === "subtract") {
+        data["a"] = operate("subtract", data["a"], parseInt(result.textContent));
+        result.textContent = data["a"];
+        memory.textContent = `${data["a"]} - `;
+    } else if (data["sign"] === "multiply") {
+        data["a"] = operate("multiply", data["a"], parseInt(result.textContent));
+        result.textContent = data["a"];
+        memory.textContent = `${data["a"]} ⨉ `;
+    } else if (data["sign"] === "divide") {
+        data["a"] = operate("divide", data["a"], parseInt(result.textContent));
+        result.textContent = data["a"];
+        memory.textContent = `${data["a"]} ÷ `;
+    } else data["a"] = parseInt(result.textContent);
+    data["sign"] = op;
+    digits = 1;
+    count++;
+    memory.style.visibility = "visible";
+    memory.textContent = op === "add" ? `${data["a"]} + `
+        : op === "subtract" ? `${data["a"]} - `
+        : op === "multiply" ? `${data["a"]} ⨉ `
+        : `${data["a"]} ÷ `;
+}
+
+/**
  * 
  * Event listeners start here.
  * 
  */
 
-window.addEventListener("pageshow", e => displayResult());
+window.addEventListener("pageshow", e => {
+    displayResult();
+    memory.style.visibility = "hidden";
+});
 
 addBtn.addEventListener("click", e => {
-    if (count === 2) {
-        addBtn.removeEventListener("click", e);
-    } else {
-        if (data["sign"] === "add") {
-            data["a"] = operate("add", data["a"], parseInt(result.textContent));
-            result.textContent = data["a"];
-        } else if (data["sign"] === "subtract") {
-            data["a"] = operate("subtract", data["a"], parseInt(result.textContent));
-            result.textContent = data["a"];
-        } else if (data["sign"] === "multiply") {
-            data["a"] = operate("multiply", data["a"], parseInt(result.textContent));
-            result.textContent = data["a"];
-        } else if (data["sign"] === "divide") {
-            data["a"] = operate("divide", data["a"], parseInt(result.textContent));
-            result.textContent = data["a"];
-        } else data["a"] = parseInt(result.textContent);
-        data["sign"] = "add";
-        digits = 1;
-        count++;
-    }
+    if (count === 2) addBtn.removeEventListener("click", e);
+    else displayEquation("add");
 });
 
 subtractBtn.addEventListener("click", e => {
-    if (count === 2) {
-        subtractBtn.removeEventListener("click", e);
-    } else {
-        if (data["sign"] === "add") {
-            data["a"] = operate("add", data["a"], parseInt(result.textContent));
-            result.textContent = data["a"];
-        } else if (data["sign"] === "subtract") {
-            data["a"] = operate("subtract", data["a"], parseInt(result.textContent));
-            result.textContent = data["a"];
-        } else if (data["sign"] === "multiply") {
-            data["a"] = operate("multiply", data["a"], parseInt(result.textContent));
-            result.textContent = data["a"];
-        } else if (data["sign"] === "divide") {
-            data["a"] = operate("divide", data["a"], parseInt(result.textContent));
-            result.textContent = data["a"];
-        } else data["a"] = parseInt(result.textContent);
-        data["sign"] = "subtract";
-        digits = 1;
-        count++;
-    }
+    if (count === 2) subtractBtn.removeEventListener("click", e);
+    else displayEquation("subtract");
 });
 
 multiplyBtn.addEventListener("click", e => {
-    if (count === 2) {
-        multiplyBtn.removeEventListener("click", e);
-    } else {
-        if (data["sign"] === "add") {
-            data["a"] = operate("add", data["a"], parseInt(result.textContent));
-            result.textContent = data["a"];
-        } else if (data["sign"] === "subtract") {
-            data["a"] = operate("subtract", data["a"], parseInt(result.textContent));
-            result.textContent = data["a"];
-        } else if (data["sign"] === "multiply") {
-            data["a"] = operate("multiply", data["a"], parseInt(result.textContent));
-            result.textContent = data["a"];
-        } else if (data["sign"] === "divide") {
-            data["a"] = operate("divide", data["a"], parseInt(result.textContent));
-            result.textContent = data["a"];
-        } else data["a"] = parseInt(result.textContent);
-        data["sign"] = "multiply";
-        digits = 1;
-        count++;
-    }
+    if (count === 2) multiplyBtn.removeEventListener("click", e);
+    else displayEquation("multiply");
 });
 
 divideBtn.addEventListener("click", e => {
-    if (count === 2) {
-        divideBtn.removeEventListener("click", e);
-    } else {
-        if (data["sign"] === "add") {
-            data["a"] = operate("add", data["a"], parseInt(result.textContent));
-            result.textContent = data["a"];
-        } else if (data["sign"] === "subtract") {
-            data["a"] = operate("subtract", data["a"], parseInt(result.textContent));
-            result.textContent = data["a"];
-        } else if (data["sign"] === "multiply") {
-            data["a"] = operate("multiply", data["a"], parseInt(result.textContent));
-            result.textContent = data["a"];
-        } else if (data["sign"] === "divide") {
-            data["a"] = operate("divide", data["a"], parseInt(result.textContent));
-            result.textContent = data["a"];
-        } else data["a"] = parseInt(result.textContent);
-        data["sign"] = "divide";
-        digits = 1;
-        count++;
-    }
+    if (count === 2) divideBtn.removeEventListener("click", e);
+    else displayEquation("divide");
 });
 
 equalsBtn.addEventListener("click", e => {
@@ -216,4 +180,5 @@ equalsBtn.addEventListener("click", e => {
         data["a"] = result.textContent;
         data["sign"] = "equals";
     }
+    memory.textContent += `${data["b"]} =`;
 });
