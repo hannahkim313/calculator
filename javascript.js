@@ -89,6 +89,20 @@ function operate(op, a, b) {
 }
 
 /**
+ * Calculates and updates the values of both the equation and result based
+ * on which operator is clicked.
+ * @param {string} op - Name of operator.
+ */
+function updateValues(op) {
+    data["a"] = operate(op, data["a"], parseInt(result.textContent));
+    result.textContent = data["a"];
+    memory.textContent = op === "add" ? `${data["a"]} + `
+        : op === "subtract" ? `${data["a"]} - `
+        : op === "multiply" ? `${data["a"]} ⨉ `
+        : `${data["a"]} ÷ `;
+}
+
+/**
  * Displays each number on the screen as a number button is clicked
  * (max is 10 digits).
  */
@@ -114,31 +128,24 @@ function displayResult() {
  * @param {string} op - Name of operator.
  */
 function displayEquation(op) {
-    if (data["sign"] === "add") {
-        data["a"] = operate("add", data["a"], parseInt(result.textContent));
+    if (data["sign"] === "add" && data["sign"] === op) updateValues("add");
+    else if (data["sign"] === "subtract" && data["sign"] === op) updateValues("subtract");
+    else if (data["sign"] === "multiply" && data["sign"] === op) updateValues("multiply");
+    else if (data["sign"] === "divide" && data["sign"] === op) updateValues("divide");
+    else if (data["sign"] === "equals") data["sign"] = op;
+    else if (!data["a"]) data["a"] = parseInt(result.textContent);
+    else if (count === 1) {
+        data["a"] = operate(data["sign"], data["a"], parseInt(result.textContent));
         result.textContent = data["a"];
-        memory.textContent = `${data["a"]} + `;
-    } else if (data["sign"] === "subtract") {
-        data["a"] = operate("subtract", data["a"], parseInt(result.textContent));
-        result.textContent = data["a"];
-        memory.textContent = `${data["a"]} - `;
-    } else if (data["sign"] === "multiply") {
-        data["a"] = operate("multiply", data["a"], parseInt(result.textContent));
-        result.textContent = data["a"];
-        memory.textContent = `${data["a"]} ⨉ `;
-    } else if (data["sign"] === "divide") {
-        data["a"] = operate("divide", data["a"], parseInt(result.textContent));
-        result.textContent = data["a"];
-        memory.textContent = `${data["a"]} ÷ `;
-    } else data["a"] = parseInt(result.textContent);
+     }
     data["sign"] = op;
-    digits = 1;
-    count++;
     memory.style.visibility = "visible";
     memory.textContent = op === "add" ? `${data["a"]} + `
         : op === "subtract" ? `${data["a"]} - `
         : op === "multiply" ? `${data["a"]} ⨉ `
         : `${data["a"]} ÷ `;
+    digits = 1;
+    count++;
 }
 
 /**
@@ -153,22 +160,22 @@ window.addEventListener("pageshow", e => {
 });
 
 addBtn.addEventListener("click", e => {
-    if (count === 2) addBtn.removeEventListener("click", e);
+    if (count === 2 && data["sign"] === "add") addBtn.removeEventListener("click", e);
     else displayEquation("add");
 });
 
 subtractBtn.addEventListener("click", e => {
-    if (count === 2) subtractBtn.removeEventListener("click", e);
+    if (count === 2 && data["sign"] === "subtract") subtractBtn.removeEventListener("click", e);
     else displayEquation("subtract");
 });
 
 multiplyBtn.addEventListener("click", e => {
-    if (count === 2) multiplyBtn.removeEventListener("click", e);
+    if (count === 2 && data["sign"] === "multiply") multiplyBtn.removeEventListener("click", e);
     else displayEquation("multiply");
 });
 
 divideBtn.addEventListener("click", e => {
-    if (count === 2) divideBtn.removeEventListener("click", e);
+    if (count === 2 && data["sign"] === "divide") divideBtn.removeEventListener("click", e);
     else displayEquation("divide");
 });
 
@@ -178,7 +185,7 @@ equalsBtn.addEventListener("click", e => {
     else {
         data["b"] = parseInt(result.textContent);
         result.textContent = operate(data["sign"], data["a"], data["b"]);
-        data["a"] = result.textContent;
+        data["a"] = parseInt(result.textContent);
         data["sign"] = "equals";
         memory.textContent += `${data["b"]} =`;
     }
@@ -192,3 +199,6 @@ acBtn.addEventListener("click", e => {
     memory.textContent = "0";
     memory.style.visibility = "hidden";
 });
+
+// BUG: AFTER DISPLAYING EQUATION AND RESULT, USER CAN APPEND NUMBERS ONTO THE RESULT
+// EX: 2 + 3 = 5 --> CLICKS 234 --> 5234
