@@ -148,9 +148,9 @@ function displayResult() {
  */
 function displayEquation(op) {
     if (data["sign"] === "add" && data["sign"] === op) updateValues("add");
-    else if (data["sign"] === "subtract" && data["sign"] === op) updateValues("subtract");
-    else if (data["sign"] === "multiply" && data["sign"] === op) updateValues("multiply");
-    else if (data["sign"] === "divide" && data["sign"] === op) updateValues("divide");
+    else if (data["sign"] === "subtract" && data["sign"] === op && count < 3) updateValues("subtract");
+    else if (data["sign"] === "multiply" && data["sign"] === op && count < 3) updateValues("multiply");
+    else if (data["sign"] === "divide" && data["sign"] === op && count < 3) updateValues("divide");
     else if (data["sign"] === "equals") data["sign"] = op;
     else if (!data["a"]) data["a"] = parseInt(result.textContent);
     else if (count === 1) {
