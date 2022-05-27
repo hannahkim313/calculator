@@ -180,8 +180,8 @@ equalsBtn.addEventListener("click", e => {
         result.textContent = operate(data["sign"], data["a"], data["b"]);
         data["a"] = result.textContent;
         data["sign"] = "equals";
+        memory.textContent += `${data["b"]} =`;
     }
-    memory.textContent += `${data["b"]} =`;
 });
 
 acBtn.addEventListener("click", e => {
