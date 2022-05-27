@@ -77,7 +77,7 @@ function multiply(a, b) {
  * @returns {number} quotient of "a" and "b".
  */
 function divide(a, b) {
-    return roundToFive(a / b);
+    return (b === 0) ? "ERROR" : roundToFive(a / b);
 }
 
 /**
@@ -147,7 +147,12 @@ function displayResult() {
  * @param {string} op - Name of operator.
  */
 function displayEquation(op) {
-    if (data["sign"] === "add" && data["sign"] === op) updateValues("add");
+    if (result.textContent === "ERROR") {
+        result.textContent = "0";
+        data["a"] = 0;
+        data["sign"] = op;
+    }
+    if (data["sign"] === "add" && data["sign"] === op && count < 3) updateValues("add");
     else if (data["sign"] === "subtract" && data["sign"] === op && count < 3) updateValues("subtract");
     else if (data["sign"] === "multiply" && data["sign"] === op && count < 3) updateValues("multiply");
     else if (data["sign"] === "divide" && data["sign"] === op && count < 3) updateValues("divide");
@@ -158,11 +163,13 @@ function displayEquation(op) {
         result.textContent = data["a"];
      }
     data["sign"] = op;
-    memory.style.visibility = "visible";
-    memory.textContent = op === "add" ? `${data["a"]} + `
-        : op === "subtract" ? `${data["a"]} - `
-        : op === "multiply" ? `${data["a"]} ⨉ `
-        : `${data["a"]} ÷ `;
+    if (result.textContent !== "ERROR") {
+        memory.style.visibility = "visible";
+        memory.textContent = op === "add" ? `${data["a"]} + `
+            : op === "subtract" ? `${data["a"]} - `
+            : op === "multiply" ? `${data["a"]} ⨉ `
+            : `${data["a"]} ÷ `;
+    } else memory.style.visibility = "hidden";
     digits = 1;
     count++;
 }
@@ -201,10 +208,12 @@ divideBtn.addEventListener("click", e => {
 equalsBtn.addEventListener("click", e => {
     if ("a" in data === false) equalsBtn.removeEventListener("click", e);
     else if (data["sign"] === "equals") equalsBtn.removeEventListener("click", e);
+    else if (data["a"] === "ERROR") equalsBtn.removeEventListener("click", e);
     else {
         data["b"] = parseInt(result.textContent);
         result.textContent = operate(data["sign"], data["a"], data["b"]);
         data["a"] = parseInt(result.textContent);
+        if (isNaN(data["a"])) data["a"] = 0;
         data["sign"] = "equals";
         memory.textContent += `${data["b"]} =`;
     }
