@@ -13,6 +13,7 @@
  const multiplyBtn = document.querySelector(".multiply");
  const divideBtn = document.querySelector(".divide");
  const equalsBtn = document.querySelector(".equals");
+ const acBtn = document.querySelector(".ac");
 
  /**
  * 
@@ -181,4 +182,13 @@ equalsBtn.addEventListener("click", e => {
         data["sign"] = "equals";
     }
     memory.textContent += `${data["b"]} =`;
+});
+
+acBtn.addEventListener("click", e => {
+    for (key in data) {
+        delete data[key];
+    }
+    result.textContent = "0";
+    memory.textContent = "0";
+    memory.style.visibility = "hidden";
 });
