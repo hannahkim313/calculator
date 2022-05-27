@@ -91,15 +91,15 @@ function operate(op, a, b) {
  * (max is 10 digits).
  */
 function displayResult() {
-    for (const button of numBtnsList) {
-        button.addEventListener("click", e => {
+    for (const btn of numBtnsList) {
+        btn.addEventListener("click", e => {
             if (result.textContent === "0") {
                 result.removeChild(result.firstChild);
-                result.textContent = button.textContent;
+                result.textContent = btn.textContent;
             } else {
                 if (digits === 1) result.removeChild(result.firstChild);
-                if (digits === 10) button.disabled = true;
-                result.textContent += button.textContent;
+                if (digits === 10) btn.disabled = true;
+                result.textContent += btn.textContent;
             }
             digits++;
             count = 1;
@@ -113,9 +113,7 @@ function displayResult() {
  * 
  */
 
-window.addEventListener("pageshow", e => {
-    displayResult();
-});
+window.addEventListener("pageshow", e => displayResult());
 
 addBtn.addEventListener("click", e => {
     if (count === 2) {
