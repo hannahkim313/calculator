@@ -6,6 +6,7 @@
 
  const numBtnsList = document.querySelectorAll(".num");
  const result = document.querySelector(".result");
+ const opBtnsList = document.querySelectorAll(".op");
  const addBtn = document.querySelector(".add");
  const subtractBtn = document.querySelector(".subtract");
  const multiplyBtn = document.querySelector(".multiply");
@@ -123,8 +124,86 @@ addBtn.addEventListener("click", e => {
         if (data["sign"] === "add") {
             data["a"] = operate("add", data["a"], parseInt(result.textContent));
             result.textContent = data["a"];
+        } else if (data["sign"] === "subtract") {
+            data["a"] = operate("subtract", data["a"], parseInt(result.textContent));
+            result.textContent = data["a"];
+        } else if (data["sign"] === "multiply") {
+            data["a"] = operate("multiply", data["a"], parseInt(result.textContent));
+            result.textContent = data["a"];
+        } else if (data["sign"] === "divide") {
+            data["a"] = operate("divide", data["a"], parseInt(result.textContent));
+            result.textContent = data["a"];
         } else data["a"] = parseInt(result.textContent);
         data["sign"] = "add";
+        digits = 1;
+        count++;
+    }
+});
+
+subtractBtn.addEventListener("click", e => {
+    if (count === 2) {
+        subtractBtn.removeEventListener("click", e);
+    } else {
+        if (data["sign"] === "add") {
+            data["a"] = operate("add", data["a"], parseInt(result.textContent));
+            result.textContent = data["a"];
+        } else if (data["sign"] === "subtract") {
+            data["a"] = operate("subtract", data["a"], parseInt(result.textContent));
+            result.textContent = data["a"];
+        } else if (data["sign"] === "multiply") {
+            data["a"] = operate("multiply", data["a"], parseInt(result.textContent));
+            result.textContent = data["a"];
+        } else if (data["sign"] === "divide") {
+            data["a"] = operate("divide", data["a"], parseInt(result.textContent));
+            result.textContent = data["a"];
+        } else data["a"] = parseInt(result.textContent);
+        data["sign"] = "subtract";
+        digits = 1;
+        count++;
+    }
+});
+
+multiplyBtn.addEventListener("click", e => {
+    if (count === 2) {
+        multiplyBtn.removeEventListener("click", e);
+    } else {
+        if (data["sign"] === "add") {
+            data["a"] = operate("add", data["a"], parseInt(result.textContent));
+            result.textContent = data["a"];
+        } else if (data["sign"] === "subtract") {
+            data["a"] = operate("subtract", data["a"], parseInt(result.textContent));
+            result.textContent = data["a"];
+        } else if (data["sign"] === "multiply") {
+            data["a"] = operate("multiply", data["a"], parseInt(result.textContent));
+            result.textContent = data["a"];
+        } else if (data["sign"] === "divide") {
+            data["a"] = operate("divide", data["a"], parseInt(result.textContent));
+            result.textContent = data["a"];
+        } else data["a"] = parseInt(result.textContent);
+        data["sign"] = "multiply";
+        digits = 1;
+        count++;
+    }
+});
+
+divideBtn.addEventListener("click", e => {
+    if (count === 2) {
+        divideBtn.removeEventListener("click", e);
+    } else {
+        if (data["sign"] === "add") {
+            data["a"] = operate("add", data["a"], parseInt(result.textContent));
+            result.textContent = data["a"];
+        } else if (data["sign"] === "subtract") {
+            data["a"] = operate("subtract", data["a"], parseInt(result.textContent));
+            result.textContent = data["a"];
+        } else if (data["sign"] === "multiply") {
+            data["a"] = operate("multiply", data["a"], parseInt(result.textContent));
+            result.textContent = data["a"];
+        } else if (data["sign"] === "divide") {
+            data["a"] = operate("divide", data["a"], parseInt(result.textContent));
+            result.textContent = data["a"];
+        } else data["a"] = parseInt(result.textContent);
+        data["sign"] = "divide";
         digits = 1;
         count++;
     }
