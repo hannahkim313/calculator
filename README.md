@@ -10,7 +10,9 @@ as follows:
 * A "clear" button that erases all of the data inputted into the calculator
 * A "delete" button that erases the last input
 * A decimal button that only allows the user to input 1 decimal point
-* Keyboard support
+
+## In Action
+<img src="./img/calculator.jpg" width="500" />
 
 ## Goals
 
