@@ -13,6 +13,7 @@
  const multiplyBtn = document.querySelector(".multiply");
  const divideBtn = document.querySelector(".divide");
  const equalsBtn = document.querySelector(".equals");
+ const decimalBtn = document.querySelector(".decimal");
  const acBtn = document.querySelector(".ac");
 
  /**
@@ -36,8 +37,8 @@ let count = 1;
  * @param {number} a 
  * @returns {number} number rounded to 5 decimal places.
  */
- function roundToFive(a) {
-    return +(Math.round(a + "e+5")  + "e-5");
+ function roundToThree(a) {
+    return +(Math.round(a + "e+3") + "e-3");
 }
 
 /**
@@ -47,7 +48,7 @@ let count = 1;
  * @returns {number} sum of "a" and "b".
  */
 function add(a, b) {
-    return a + b;
+    return roundToThree(a + b);
 }
 
 /**
@@ -57,7 +58,7 @@ function add(a, b) {
  * @returns {number} difference of "a" and "b".
  */
 function subtract(a, b) {
-    return a - b;
+    return roundToThree(a - b);
 }
 
 /**
@@ -67,7 +68,7 @@ function subtract(a, b) {
  * @returns {number} product of "a" and "b".
  */
 function multiply(a, b) {
-    return a * b;
+    return roundToThree(a * b);
 }
 
 /**
@@ -77,7 +78,7 @@ function multiply(a, b) {
  * @returns {number} quotient of "a" and "b".
  */
 function divide(a, b) {
-    return (b === 0) ? "ERROR" : roundToFive(a / b);
+    return (b === 0) ? "ERROR" : roundToThree(a / b);
 }
 
 /**
@@ -112,7 +113,7 @@ function clearData() {
  * @param {string} op - Name of operator.
  */
 function updateValues(op) {
-    data["a"] = operate(op, data["a"], parseInt(result.textContent));
+    data["a"] = operate(op, data["a"], parseFloat(result.textContent));
     result.textContent = data["a"];
     memory.textContent = op === "add" ? `${data["a"]} + `
         : op === "subtract" ? `${data["a"]} - `
@@ -133,10 +134,10 @@ function displayResult() {
                 result.textContent = btn.textContent;
             } else {
                 if (digits === 1) result.removeChild(result.firstChild);
-                if (digits === 10) btn.disabled = true;
-                result.textContent += btn.textContent;
-                digits++;
+                if (digits > 9) btn.removeEventListener("click", e);
+                else result.textContent += btn.textContent;
             }
+            digits++;
             count = 1;
         });
     }
@@ -157,9 +158,9 @@ function displayEquation(op) {
     else if (data["sign"] === "multiply" && data["sign"] === op && count < 3) updateValues("multiply");
     else if (data["sign"] === "divide" && data["sign"] === op && count < 3) updateValues("divide");
     else if (data["sign"] === "equals") data["sign"] = op;
-    else if (!data["a"]) data["a"] = parseInt(result.textContent);
+    else if (!data["a"]) data["a"] = parseFloat(result.textContent);
     else if (count === 1) {
-        data["a"] = operate(data["sign"], data["a"], parseInt(result.textContent));
+        data["a"] = operate(data["sign"], data["a"], parseFloat(result.textContent));
         result.textContent = data["a"];
      }
     data["sign"] = op;
@@ -210,9 +211,9 @@ equalsBtn.addEventListener("click", e => {
     else if (data["sign"] === "equals") equalsBtn.removeEventListener("click", e);
     else if (data["a"] === "ERROR") equalsBtn.removeEventListener("click", e);
     else {
-        data["b"] = parseInt(result.textContent);
+        data["b"] = parseFloat(result.textContent);
         result.textContent = operate(data["sign"], data["a"], data["b"]);
-        data["a"] = parseInt(result.textContent);
+        data["a"] = parseFloat(result.textContent);
         if (isNaN(data["a"])) data["a"] = 0;
         data["sign"] = "equals";
         memory.textContent += `${data["b"]} =`;
