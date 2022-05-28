@@ -15,6 +15,7 @@
  const equalsBtn = document.querySelector(".equals");
  const decimalBtn = document.querySelector(".decimal");
  const acBtn = document.querySelector(".ac");
+ const delBtn = document.querySelector(".del");
 
  /**
  * 
@@ -218,3 +219,11 @@ equalsBtn.addEventListener("click", e => {
 });
 
 acBtn.addEventListener("click", e => clearData());
+
+delBtn.addEventListener("click", e => {
+    if (data["sign"] === "equals") delBtn.removeEventListener("click", e);
+    else {
+        result.textContent = result.textContent.slice(0, result.textContent.length - 1);
+        if (result.textContent === "") result.textContent = "0";
+    }
+});
