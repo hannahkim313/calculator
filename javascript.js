@@ -33,22 +33,14 @@ let count = 1;
  */
 
 /**
- * Rounds a number to 5 decimal places.
- * @param {number} a 
- * @returns {number} number rounded to 5 decimal places.
- */
- function roundToThree(a) {
-    return +(Math.round(a + "e+3") + "e-3");
-}
-
-/**
  * Adds two numbers and returns the sum.
  * @param {number} a 
  * @param {number} b 
  * @returns {number} sum of "a" and "b".
  */
 function add(a, b) {
-    return roundToThree(a + b);
+    const sum = a + b;
+    return (sum.toString().length > 9) ? sum.toExponential(3) : sum;
 }
 
 /**
@@ -58,7 +50,8 @@ function add(a, b) {
  * @returns {number} difference of "a" and "b".
  */
 function subtract(a, b) {
-    return roundToThree(a - b);
+    const diff = a - b;
+    return (diff.toString().length > 9) ? diff.toExponential(3) : diff;
 }
 
 /**
@@ -68,7 +61,8 @@ function subtract(a, b) {
  * @returns {number} product of "a" and "b".
  */
 function multiply(a, b) {
-    return roundToThree(a * b);
+    const product = a * b;
+    return (product.toString().length > 9) ? product.toExponential(3) : product;
 }
 
 /**
@@ -78,7 +72,8 @@ function multiply(a, b) {
  * @returns {number} quotient of "a" and "b".
  */
 function divide(a, b) {
-    return (b === 0) ? "ERROR" : roundToThree(a / b);
+    const quotient = a / b;
+    return (quotient.toString().length > 9) ? quotient.toExponential(3) : quotient;
 }
 
 /**
