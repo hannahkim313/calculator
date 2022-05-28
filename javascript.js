@@ -73,7 +73,9 @@ function multiply(a, b) {
  */
 function divide(a, b) {
     const quotient = a / b;
-    return (quotient.toString().length > 9) ? quotient.toExponential(3) : quotient;
+    return (quotient.toString().length > 9) ? quotient.toExponential(3)
+        : b === 0 ? "ERROR"
+        : quotient;
 }
 
 /**
@@ -118,7 +120,7 @@ function updateValues(op) {
 
 /**
  * Displays each number on the screen as a number button is clicked
- * (max is 10 digits).
+ * (max is 9 digits).
  */
 function displayResult() {
     for (const btn of numBtnsList) {
