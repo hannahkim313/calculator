@@ -127,13 +127,15 @@ function updateValues(op) {
 function displayResult() {
     for (const btn of numBtnsList) {
         btn.addEventListener("click", e => {
-            if (data["sign"] === "equals") clearData();
+            if (data["sign"] === "equals" && !result.textContent.includes(".")) clearData();
             if (result.textContent === "0") {
                 result.removeChild(result.firstChild);
                 result.textContent = btn.textContent;
             } else {
-                if (digits === 0 && result.textContent[result.textContent.length - 1] !== ".") result.removeChild(result.firstChild);
-                if (digits === 9) btn.removeEventListener("click", e);
+                if (digits === 0 && result.textContent[result.textContent.length - 1] !== ".") {
+                    result.removeChild(result.firstChild);
+                }
+                if (digits > 8) btn.removeEventListener("click", e);
                 else result.textContent += btn.textContent;
             }
             digits++;
@@ -152,18 +154,20 @@ function displayEquation(op) {
         data["a"] = 0;
         data["sign"] = op;
     }
-    if (data["sign"] === "add" && data["sign"] === op && numBtnClicks < 3) updateValues("add");
-    else if (data["sign"] === "subtract" && data["sign"] === op && numBtnClicks < 3) updateValues("subtract");
-    else if (data["sign"] === "multiply" && data["sign"] === op && numBtnClicks < 3) updateValues("multiply");
-    else if (data["sign"] === "divide" && data["sign"] === op && numBtnClicks < 3) updateValues("divide");
+    const canUpdate = () => { return data["sign"] === op && numBtnClicks < 3; };
+    if (data["sign"] === "add" && canUpdate()) updateValues("add");
+    else if (data["sign"] === "subtract" && canUpdate()) updateValues("subtract");
+    else if (data["sign"] === "multiply" && canUpdate()) updateValues("multiply");
+    else if (data["sign"] === "divide" && canUpdate()) updateValues("divide");
     else if (data["sign"] === "equals") data["sign"] = op;
-    else if (!data["a"]) data["a"] = parseFloat(result.textContent);
+    else if ("a" in data === false) data["a"] = parseFloat(result.textContent);
     else if (numBtnClicks === 1) {
         data["a"] = operate(data["sign"], data["a"], parseFloat(result.textContent));
         result.textContent = data["a"];
      }
     data["sign"] = op;
     if (result.textContent !== "ERROR") {
+        data["a"] = parseFloat(result.textContent);
         memory.style.visibility = "visible";
         memory.textContent = op === "add" ? `${data["a"]} + `
             : op === "subtract" ? `${data["a"]} - `
@@ -206,10 +210,12 @@ divideBtn.addEventListener("click", e => {
 });
 
 equalsBtn.addEventListener("click", e => {
-    if ("a" in data === false) equalsBtn.removeEventListener("click", e);
-    else if (data["sign"] === "equals") equalsBtn.removeEventListener("click", e);
-    else if (data["a"] === "ERROR") equalsBtn.removeEventListener("click", e);
-    else {
+    if ("a" in data === false ||
+        data["sign"] === "equals" ||
+        data["a"] === "ERROR"
+    ) {
+        equalsBtn.removeEventListener("click", e);
+    } else {
         data["b"] = parseFloat(result.textContent);
         result.textContent = operate(data["sign"], data["a"], data["b"]);
         data["a"] = parseFloat(result.textContent);
@@ -232,13 +238,11 @@ delBtn.addEventListener("click", e => {
 });
 
 decimalBtn.addEventListener("click", e => {
-    if (
-        "a" in data === false && result.textContent.includes(".") ||
+    if ("a" in data === false && result.textContent.includes(".") ||
         data["a"] !== parseFloat(result.textContent) && result.textContent.includes(".")
     ) {
         decimalBtn.removeEventListener("click", e);
     }
-    else if (data["b"] !== data["a"] && !result.textContent.includes(".")) result.textContent += ".";
-    else if (data["b"] || data["a"] && data["sign"]) result.textContent = "0.";
+    else if (digits === 0) result.textContent = "0.";
     else result.textContent += ".";
 });
